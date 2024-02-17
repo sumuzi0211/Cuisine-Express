@@ -9,6 +9,7 @@ import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -42,4 +43,11 @@ public interface DishMapper {
 
     @AutoFill(value = OperationType.UPDATE)
     void update(Dish dish);
+
+    @Update("update sky_take_out.dish set status = #{status} where id = #{id}")
+    @AutoFill(value = OperationType.UPDATE)
+    void startOrStop(Integer status, Long id);
+
+    @Select("select * from sky_take_out.dish where category_id = #{categoryId} and status = #{enable}")
+    List<Dish> list(Long categoryId, Integer enable);
 }
